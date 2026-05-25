@@ -1,0 +1,10 @@
+PowerShell
+Tail: Get-Content .\file.log -Tail 10 -Wait
+Tail and filter: get-content -Tail 100 -wait .\somefile.txt | Select-String -Pattern "whatever"
+Get PowerShell version: $Host.Version
+Send an email: Send-MailMessage -From "some@address" -To "some@address" -Subject "Test Email" -Body "This is a test email body." -SmtpServer "someIPorName" -Port 25 -Credential (Get-Credential) -UseSsl
+
+CMD
+Check user password expiry: net user /domain %username%
+Check time sync: w32tm /stripchart /computer:pool.ntp.org /dataonly /samples:5
+Check who is logged into a system remotely: query session /server:techstn03

@@ -6,6 +6,13 @@ Send an email: Send-MailMessage -From "some@address" -To "some@address" -Subject
 Script policy: Set-ExecutionPolicy RemoteSigned -Scope LocalMachine
 Allow unsigned script: Unblock-File
 
+Powershell scheduled task:
+Run whether user is logged in or not
+program/script: powershell.exe
+arguments: -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\scripts\somescript.ps1"
+start in: C:\scripts
+Grant user 'logon as batch': secpol.msc, Local Policies, User Rights Assignment, Log on as a batch job
+
 CMD
 Check user password expiry: net user /domain %username%
 Check time sync: w32tm /stripchart /computer:pool.ntp.org /dataonly /samples:5

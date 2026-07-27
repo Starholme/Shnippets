@@ -2,9 +2,23 @@ PowerShell
 Tail: Get-Content .\file.log -Tail 10 -Wait
 Tail and filter: get-content -Tail 100 -wait .\somefile.txt | Select-String -Pattern "whatever"
 Get PowerShell version: $Host.Version
-Send an email: Send-MailMessage -From "some@address" -To "some@address" -Subject "Test Email" -Body "This is a test email body." -SmtpServer "someIPorName" -Port 25 -Credential (Get-Credential) -UseSsl
+Send an email: 
+	Send-MailMessage -From "some@address" -To "some@address" -Subject "Test Email" -Body "This is a test email body." -SmtpServer "someIPorName" -Port 25 -Credential (Get-Credential) -UseSsl
 Script policy: Set-ExecutionPolicy RemoteSigned -Scope LocalMachine
 Allow unsigned script: Unblock-File
+Regex:
+	Regex escape character: /
+	Things that need escaping: [().\^$|?*+{
+	Remove lines in large file:
+		Get-Content -Path "infile.txt" -ReadCount 1000 `
+		| ForEach-Object { $_ -replace ".*yourMatchHere*", "" } `
+		| Where-Object { $_.Trim() -ne "" } `
+		| Set-Content -Path "outfile.txt"
+	Keep lines in large file:
+		Get-Content -Path "infile.txt" -ReadCount 1000 `
+		| ForEach-Object { $_ -match ".*yourMatchHere*"} `
+		| Set-Content -Path "outfile.txt"
+
 
 Powershell scheduled task:
 Run whether user is logged in or not

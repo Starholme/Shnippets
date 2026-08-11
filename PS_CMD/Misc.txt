@@ -18,7 +18,7 @@ Regex:
 		Get-Content -Path "infile.txt" -ReadCount 1000 `
 		| ForEach-Object { $_ -match ".*yourMatchHere*"} `
 		| Set-Content -Path "outfile.txt"
-
+Get desktop path: $dir = [Environment]::GetFolderPath("Desktop")
 
 Powershell scheduled task:
 Run whether user is logged in or not

@@ -30,7 +30,7 @@ Function TrimLogFile
 	try{
 		if (Test-Path $logFilePath)
 		{
-			Get-Content -Tail $logLength $logFilePath > Set-Content $logFilePath
+			Get-Content -Tail $logLength $logFilePath | Set-Content $logFilePath
 		}
 		else
 		{

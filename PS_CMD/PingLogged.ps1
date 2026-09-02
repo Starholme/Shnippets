@@ -1,7 +1,7 @@
-$target = "someserver" # Or an IP address
-$intervalMs = 250 #ms between pings
+$targets = "google.ca","123.123.123.123","someMachineName" #List of machine names or IP addresses
+$intervalMs = 1000 #ms between pings
 $numberOfPings = 0 #number of pings to run before stopping, 0 to run forever
-$slowPingMs = 50 #pings over this number of ms will be logged
+$slowPingMs = 100 #pings over this number of ms will be logged
 
 ###region Configuration###
 
@@ -71,16 +71,18 @@ try
 
 	while ($loopCounter -ne $numberOfPings) {
 		
-		$result = Test-Connection -ComputerName $target -Count 1 -ErrorAction SilentlyContinue
-		$timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+		foreach ($target in $targets){
+			$result = Test-Connection -ComputerName $target -Count 1 -ErrorAction SilentlyContinue
+			$timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 
-		if ($result) {
-			"$timestamp - Ping to $target successful. Latency: $($result.ResponseTime)ms"
-			if ($result.ResponseTime -gt $slowPingMs){
-				Log "$timestamp - Ping to $target slow: $($result.ResponseTime)ms"
+			if ($result) {
+				"$timestamp - Ping to $target successful. Latency: $($result.ResponseTime)ms"
+				if ($result.ResponseTime -gt $slowPingMs){
+					Log "$timestamp - Ping to $target slow: $($result.ResponseTime)ms"
+				}
+			} else {
+				Log "$timestamp - Ping to $target failed."
 			}
-		} else {
-			Log "$timestamp - Ping to $target failed."
 		}
 		
 		if ($loopCounter % 10000 -eq 0)
